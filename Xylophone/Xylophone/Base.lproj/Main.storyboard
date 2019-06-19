@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Xylophone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Pci-jT-Ji7">
+                                <rect key="frame" x="9.5" y="36" width="356" height="615"/>
+                                <subviews>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsq-5C-1sE" userLabel="NoteButton1">
+                                        <rect key="frame" x="0.0" y="0.0" width="356" height="79.5"/>
+                                        <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="noteButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="qpe-wb-Up9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ga0-IS-5ae" userLabel="NoteButton2">
+                                        <rect key="frame" x="4.5" y="89.5" width="347" height="79"/>
+                                        <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="noteButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="aeW-bW-kF7"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Liu-Qx-JHx" userLabel="NoteButton3">
+                                        <rect key="frame" x="9" y="178.5" width="338" height="79.5"/>
+                                        <color key="backgroundColor" red="0.99953407049999998" green="0.98835557699999999" blue="0.47265523669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="noteButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="TPF-Bg-Ofh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ITW-BE-f9W" userLabel="NoteButton4">
+                                        <rect key="frame" x="13" y="268" width="330" height="79"/>
+                                        <color key="backgroundColor" red="0.83216959239999999" green="0.98548370600000001" blue="0.47333085539999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="noteButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="fgm-rC-lxO"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ya-JI-03h" userLabel="NoteButton5">
+                                        <rect key="frame" x="17.5" y="357" width="321" height="79.5"/>
+                                        <color key="backgroundColor" red="0.45009386540000001" green="0.98132258650000004" blue="0.4743030667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="noteButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="8ZP-yI-Cfh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dND-s2-xaG" userLabel="NoteButton6">
+                                        <rect key="frame" x="22" y="446.5" width="312" height="79"/>
+                                        <color key="backgroundColor" red="0.45085787770000002" green="0.98829740290000001" blue="0.83763033149999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="noteButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="JrU-no-DWD"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PGA-M1-YLj" userLabel="NoteButton7">
+                                        <rect key="frame" x="26.5" y="535.5" width="303" height="79.5"/>
+                                        <color key="backgroundColor" red="0.45138680930000002" green="0.99309605359999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="noteButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="DjR-aL-Bez"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="nsq-5C-1sE" firstAttribute="width" secondItem="Pci-jT-Ji7" secondAttribute="width" id="0c6-r9-6dH"/>
+                                    <constraint firstItem="Liu-Qx-JHx" firstAttribute="width" secondItem="Pci-jT-Ji7" secondAttribute="width" multiplier="0.95" id="39z-Qk-Vrd"/>
+                                    <constraint firstItem="8ya-JI-03h" firstAttribute="width" secondItem="Pci-jT-Ji7" secondAttribute="width" multiplier="0.9" id="Mmw-yP-jOy"/>
+                                    <constraint firstItem="ga0-IS-5ae" firstAttribute="width" secondItem="Pci-jT-Ji7" secondAttribute="width" multiplier="0.975" id="ZJe-o1-vMe"/>
+                                    <constraint firstItem="ITW-BE-f9W" firstAttribute="width" secondItem="Pci-jT-Ji7" secondAttribute="width" multiplier="0.925" id="ckP-Nq-6Am"/>
+                                    <constraint firstItem="dND-s2-xaG" firstAttribute="width" secondItem="Pci-jT-Ji7" secondAttribute="width" multiplier="0.875" id="fX6-UJ-nqg"/>
+                                    <constraint firstItem="PGA-M1-YLj" firstAttribute="width" secondItem="Pci-jT-Ji7" secondAttribute="width" multiplier="0.85" id="uzK-Lp-M2d"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Pci-jT-Ji7" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.95" id="0Jw-NA-Nyt"/>
+                            <constraint firstItem="Pci-jT-Ji7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="iHl-lj-a4p"/>
+                            <constraint firstItem="Pci-jT-Ji7" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="jxr-C8-dLz"/>
+                            <constraint firstItem="Pci-jT-Ji7" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.95" id="t91-ZG-aBk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
