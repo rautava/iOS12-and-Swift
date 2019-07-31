@@ -7,15 +7,13 @@
 //
 
 import Foundation
-import CoreData
+import RealmSwift
 
-public class Item: NSManagedObject {
-    public convenience init(context: NSManagedObjectContext, title: String, category: Category?) {
-        self.init(context: context)
-        self.title = title
-        self.done = false
-        self.parentCategory = category
-    }
+public class Item: Object {
+    @objc dynamic var title: String = ""
+    @objc dynamic var done: Bool = false
+    @objc dynamic var dateCreated: Date = Date()
+    var parentCategory = LinkingObjects(fromType: Category.self, property: "items")
 
     public func toggleDone() {
         done = !done

@@ -6,20 +6,15 @@
 //  Copyright © 2019 Tommi Rautava. All rights reserved.
 //
 
+import RealmSwift
 import UIKit
-import CoreData
 
 class CategoryViewController: UITableViewController {
-
-    var categoryArray = [Category]()
-
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var categories: Results<Category>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        loadContext()
-        fixOrphanItems()
+        load()
     }
 
     // MARK: - TableView Data Source Methods
@@ -29,14 +24,14 @@ class CategoryViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryArray.count
+        return categories?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let category = categoryArray[indexPath.row]
+        let category = categories?[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
 
-        cell.textLabel?.text = category.name
+        cell.textLabel?.text = category?.name ?? ""
 
         return cell
     }
@@ -44,8 +39,8 @@ class CategoryViewController: UITableViewController {
     // MARK: - TableView Delegate Methods
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let category = categoryArray[indexPath.row]
-        //let cell = tableView.cellForRow(at: indexPath)
+        // let category = categoryArray[indexPath.row]
+        // let cell = tableView.cellForRow(at: indexPath)
 
         performSegue(withIdentifier: "goToItems", sender: self)
     }
@@ -53,32 +48,29 @@ class CategoryViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? TodoListViewController {
             if let indexPath = tableView.indexPathForSelectedRow {
-                destinationVC.selectedCategory = categoryArray[indexPath.row]
+                destinationVC.selectedCategory = categories?[indexPath.row]
             }
         }
     }
 
     // MARK: - Data Storage Methods
 
-    private func saveContext() {
+    private func save(newCategory: Category) {
         do {
-            try context.save()
+            let realm = try Realm()
+
+            try realm.write {
+                realm.add(newCategory)
+            }
         } catch {
-            print("Error saving context \(error)")
+            print("Error saving a new category \(error)")
         }
     }
 
-    private func loadContext(with request: NSFetchRequest<Category> = Category.fetchRequest()) {
-        do {
-            self.categoryArray = try context.fetch(request)
-        } catch {
-            print("Error loading context \(error)")
-        }
+    private func load() {
+        let realm = try! Realm()
 
-        if categoryArray.count == 0 {
-            let category = Category(context: context)
-            category.name = "Misc"
-        }
+        categories = realm.objects(Category.self)
 
         tableView.reloadData()
     }
@@ -90,39 +82,20 @@ class CategoryViewController: UITableViewController {
 
         var textField = UITextField()
 
-        alert.addTextField { (alertTextField) in
+        alert.addTextField { alertTextField in
             alertTextField.placeholder = "Create new category"
             textField = alertTextField
         }
 
-        let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
-            let category = Category(context: self.context)
+        let action = UIAlertAction(title: "Add Category", style: .default) { _ in
+            let category = Category()
             category.name = textField.text!
-            self.categoryArray.append(category)
-            self.saveContext()
+            self.save(newCategory: category)
             self.tableView.reloadData()
         }
 
         alert.addAction(action)
 
-        self.present(alert, animated: true, completion: nil)
-    }
-
-    // MARK: - Misc
-    private func fixOrphanItems() {
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        request.predicate = NSPredicate(format: "parentCategory == nil")
-
-        do {
-            let itemArray = try context.fetch(request)
-
-            for item in itemArray {
-                item.parentCategory = categoryArray[0]
-            }
-
-            try context.save()
-        } catch {
-            print("Error while fixing orphaned items \(error)")
-        }
+        present(alert, animated: true, completion: nil)
     }
 }

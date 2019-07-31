@@ -6,49 +6,45 @@
 //  Copyright © 2019 Tommi Rautava. All rights reserved.
 //
 
+import RealmSwift
 import UIKit
-import CoreData
 
 let TodoListArrayKey: String = "TodoListArray"
 
-
 class TodoListViewController: UITableViewController {
-    var itemArray = [Item]() {
-        didSet {
-            applyFilter()
-        }
-    }
-
-    var filteredArray = [Item]()
+    var items: Results<Item>?
 
     var selectedCategory: Category? {
         didSet {
-            itemArray = (selectedCategory?.items?.allObjects as! [Item]).sorted {
-                $0.title!.lowercased() < $1.title!.lowercased()
-            }
+            items = selectedCategory!.items.sorted(byKeyPath: "title", ascending: true)
         }
     }
 
     var filterText: String = "" {
         didSet {
-            applyFilter()
+            if filterText.count == 0 {
+                filter = NSPredicate(value: true)
+                return
+            }
+
+            filter = NSPredicate(format: "title CONTAINS[cd] %@", filterText)
         }
     }
 
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var filter = NSPredicate(value: true)
 
     // MARK: - TableView Data Source Methods
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredArray.count
+        return items?.filter(filter).count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = filteredArray[indexPath.row]
+        let item = items?.filter(filter)[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
 
-        cell.textLabel?.text = item.title
-        cell.accessoryType = item.done ? .checkmark : .none
+        cell.textLabel?.text = item?.title ?? ""
+        cell.accessoryType = (item?.done ?? false) ? .checkmark : .none
 
         return cell
     }
@@ -56,23 +52,54 @@ class TodoListViewController: UITableViewController {
     // MARK: - TableView Delegate Methods
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = filteredArray[indexPath.row]
-        let cell = tableView.cellForRow(at: indexPath)
+        tableView.deselectRow(at: indexPath, animated: false)
 
-        item.toggleDone()
-        saveContext()
-        cell?.accessoryType = item.done ? .checkmark : .none
+        let item = items?.filter(filter)[indexPath.row]
 
-        tableView.deselectRow(at: indexPath, animated: true)
+        if let item = item {
+            toggleItemDone(item)
+        }
+
+        tableView.reloadData()
     }
 
-    // MARK: - Data Storage Methods
+    // MARK: - Data Manipulation Methods
 
-    private func saveContext() {
+    private func addItem(title: String) {
         do {
-            try context.save()
+            let realm = try Realm()
+
+            try realm.write {
+                let item = Item()
+                item.title = title
+                self.selectedCategory!.items.append(item)
+            }
         } catch {
-            print("Error saving context \(error)")
+            print("Error while adding a new item \(error)")
+        }
+    }
+
+    private func toggleItemDone(_ item: Item) {
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                item.toggleDone()
+            }
+        } catch {
+            print("Error while toggling done status of an item \(error)")
+        }
+    }
+
+    private func deleteItem(_ item: Item) {
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                realm.delete(item)
+            }
+        } catch {
+            print("Error while deleting an item \(error)")
         }
     }
 
@@ -83,36 +110,23 @@ class TodoListViewController: UITableViewController {
 
         let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
 
-        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-            let item = Item(context: self.context, title: textField.text!, category: self.selectedCategory)
-            self.itemArray.append(item)
-            self.saveContext()
+        let action = UIAlertAction(title: "Add Item", style: .default) {
+            _ in
+
+            self.addItem(title: textField.text!)
             self.tableView.reloadData()
         }
 
-        alert.addTextField { (alertTextField) in
+        alert.addTextField { alertTextField in
             alertTextField.placeholder = "Create new item"
             textField = alertTextField
         }
 
         alert.addAction(action)
 
-        self.present(alert, animated: true, completion: nil)
-    }
-
-    private func applyFilter() {
-        if filterText.count == 0 {
-            filteredArray = itemArray
-            return
-        }
-
-        filteredArray = itemArray.filter {
-            (item) -> Bool in
-            return item.title!.lowercased().contains(filterText)
-        }
+        present(alert, animated: true, completion: nil)
     }
 }
-
 
 extension TodoListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
