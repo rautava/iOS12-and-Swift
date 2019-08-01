@@ -11,7 +11,7 @@ import UIKit
 
 let TodoListArrayKey: String = "TodoListArray"
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     var items: Results<Item>?
 
     var selectedCategory: Category? {
@@ -40,8 +40,8 @@ class TodoListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = items?.filter(filter)[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        let item = itemAt(indexPath)
 
         cell.textLabel?.text = item?.title ?? ""
         cell.accessoryType = (item?.done ?? false) ? .checkmark : .none
@@ -49,12 +49,16 @@ class TodoListViewController: UITableViewController {
         return cell
     }
 
+    private func itemAt(_ indexPath: IndexPath) -> Item? {
+        return items?.filter(filter)[indexPath.row]
+    }
+
     // MARK: - TableView Delegate Methods
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
 
-        let item = items?.filter(filter)[indexPath.row]
+        let item = itemAt(indexPath)
 
         if let item = item {
             toggleItemDone(item)
@@ -126,7 +130,17 @@ class TodoListViewController: UITableViewController {
 
         present(alert, animated: true, completion: nil)
     }
+
+    // MARK: - Swipe callback methods
+
+    override func deleteObject(at indexPath: IndexPath) {
+        if let item = itemAt(indexPath) {
+            deleteItem(item)
+        }
+    }
 }
+
+// MARK: - Search Bar delegate methods
 
 extension TodoListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

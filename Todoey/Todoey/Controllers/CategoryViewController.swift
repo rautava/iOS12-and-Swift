@@ -9,12 +9,12 @@
 import RealmSwift
 import UIKit
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: SwipeTableViewController {
     var categories: Results<Category>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        load()
+        fetchCategories()
     }
 
     // MARK: - TableView Data Source Methods
@@ -28,8 +28,8 @@ class CategoryViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         let category = categories?[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
 
         cell.textLabel?.text = category?.name ?? ""
 
@@ -55,19 +55,34 @@ class CategoryViewController: UITableViewController {
 
     // MARK: - Data Storage Methods
 
-    private func save(newCategory: Category) {
+    private func addCategory(name: String) {
         do {
             let realm = try Realm()
 
             try realm.write {
-                realm.add(newCategory)
+                let category = Category()
+                category.name = name
+                realm.add(category)
             }
         } catch {
-            print("Error saving a new category \(error)")
+            print("Error while adding a new category \(error)")
         }
     }
 
-    private func load() {
+    private func deleteCategory(_ category: Category) {
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                realm.delete(category.items)
+                realm.delete(category)
+            }
+        } catch {
+            print("Error while deleting a new category \(error)")
+        }
+    }
+
+    private func fetchCategories() {
         let realm = try! Realm()
 
         categories = realm.objects(Category.self)
@@ -88,14 +103,20 @@ class CategoryViewController: UITableViewController {
         }
 
         let action = UIAlertAction(title: "Add Category", style: .default) { _ in
-            let category = Category()
-            category.name = textField.text!
-            self.save(newCategory: category)
+            self.addCategory(name: textField.text!)
             self.tableView.reloadData()
         }
 
         alert.addAction(action)
 
         present(alert, animated: true, completion: nil)
+    }
+
+    // MARK: - Swipe callback methods
+
+    override func deleteObject(at indexPath: IndexPath) {
+        if let category = categories?[indexPath.row] {
+            deleteCategory(category)
+        }
     }
 }
