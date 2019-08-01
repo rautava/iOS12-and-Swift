@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         /// [source](https://realm.io/docs/swift/latest/#migrations)
         let config = Realm.Configuration(
-            schemaVersion: 1,
+            schemaVersion: 2,
 
             migrationBlock: {
                 migration, oldSchemaVersion in
@@ -26,6 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         _, newObject in
 
                         newObject!["dateCreated"] = Date()
+                    }
+                } else if oldSchemaVersion < 2 {
+                    migration.enumerateObjects(ofType: Category.className()) {
+                        _, newObject in
+
+                        newObject!["color"] = UIColor.randomFlat().hexValue()
                     }
                 }
             }

@@ -17,6 +17,8 @@ class TodoListViewController: SwipeTableViewController {
     var selectedCategory: Category? {
         didSet {
             items = selectedCategory!.items.sorted(byKeyPath: "title", ascending: true)
+            backgroundColor = UIColor(hexString: selectedCategory?.color)
+            textColor = UIColor(contrastingBlackOrWhiteColorOn: backgroundColor, isFlat: false)
         }
     }
 
@@ -33,6 +35,17 @@ class TodoListViewController: SwipeTableViewController {
 
     var filter = NSPredicate(value: true)
 
+    @IBOutlet var searchBar: UISearchBar!
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        title = selectedCategory?.name
+
+        searchBar.barTintColor = backgroundColor
+        searchBar.tintColor = textColor
+    }
+
     // MARK: - TableView Data Source Methods
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,6 +58,20 @@ class TodoListViewController: SwipeTableViewController {
 
         cell.textLabel?.text = item?.title ?? ""
         cell.accessoryType = (item?.done ?? false) ? .checkmark : .none
+
+        var percentage: CGFloat = 0.0
+        let itemCount = items!.count
+
+        if itemCount > 1 {
+            percentage = CGFloat(indexPath.row) / CGFloat(itemCount - 1) * 0.3
+        }
+
+        let cellColor = backgroundColor.darken(byPercentage: percentage)
+        let textColor = UIColor(contrastingBlackOrWhiteColorOn: cellColor, isFlat: false)
+
+        cell.backgroundColor = cellColor
+        cell.textLabel?.textColor = textColor
+        cell.tintColor = textColor
 
         return cell
     }

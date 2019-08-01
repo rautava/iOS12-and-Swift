@@ -6,6 +6,7 @@
 //  Copyright © 2019 Tommi Rautava. All rights reserved.
 //
 
+import ChameleonFramework
 import RealmSwift
 import UIKit
 
@@ -14,7 +15,15 @@ class CategoryViewController: SwipeTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         fetchCategories()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        backgroundColor = UIColor.flatSkyBlue()
+        textColor = UIColor(contrastingBlackOrWhiteColorOn: backgroundColor, isFlat: false) ?? UIColor.black
+
+        super.viewWillAppear(animated)
     }
 
     // MARK: - TableView Data Source Methods
@@ -32,6 +41,8 @@ class CategoryViewController: SwipeTableViewController {
         let category = categories?[indexPath.row]
 
         cell.textLabel?.text = category?.name ?? ""
+        cell.backgroundColor = UIColor(hexString: category?.color) ?? UIColor.randomFlat()
+        cell.textLabel?.textColor = UIColor(contrastingBlackOrWhiteColorOn: cell.backgroundColor, isFlat: false)
 
         return cell
     }
@@ -39,10 +50,9 @@ class CategoryViewController: SwipeTableViewController {
     // MARK: - TableView Delegate Methods
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // let category = categoryArray[indexPath.row]
-        // let cell = tableView.cellForRow(at: indexPath)
-
         performSegue(withIdentifier: "goToItems", sender: self)
+
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
