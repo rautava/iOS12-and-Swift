@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cVx-K0-MAz">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SeeFood2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hotdogBackground" translatesAutoresizingMaskIntoConstraints="NO" id="D9I-CC-fqU" userLabel="Main Image View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hpf-bU-xYe" userLabel="Top Image View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="103.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="hpf-bU-xYe" secondAttribute="height" multiplier="4:1" id="0iN-h6-DvX"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQT-dC-LmO" userLabel="Share Button">
+                                <rect key="frame" x="50" y="365" width="314" height="78.5"/>
+                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="rQT-dC-LmO" secondAttribute="height" multiplier="4:1" id="GBx-aY-zTZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                <state key="normal" title="Share">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kbb-de-t00"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5z-se-zFz" userLabel="Result Text">
+                                <rect key="frame" x="0.0" y="774" width="414" height="0.0"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="rQT-dC-LmO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="8Cy-G1-q76"/>
+                            <constraint firstItem="hpf-bU-xYe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="A4X-aS-bpO"/>
+                            <constraint firstItem="rQT-dC-LmO" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-50" id="BLc-3H-q2a"/>
+                            <constraint firstItem="Z5z-se-zFz" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="L84-I0-RxD"/>
+                            <constraint firstItem="Z5z-se-zFz" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="PRX-N2-MVQ"/>
+                            <constraint firstItem="hpf-bU-xYe" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="QDb-hw-tMe"/>
+                            <constraint firstItem="rQT-dC-LmO" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Zgz-lA-cVx"/>
+                            <constraint firstItem="D9I-CC-fqU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="c9F-Ib-Rd6"/>
+                            <constraint firstItem="D9I-CC-fqU" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="cOE-UY-59c"/>
+                            <constraint firstItem="hpf-bU-xYe" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="eIy-Cr-Het"/>
+                            <constraint firstItem="D9I-CC-fqU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="gBc-Rg-bEI"/>
+                            <constraint firstItem="D9I-CC-fqU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hAm-kp-5dG"/>
+                            <constraint firstItem="Z5z-se-zFz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="pr9-fc-00H"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="a2K-Hm-G7a">
+                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="cCV-x3-gKQ">
+                            <connections>
+                                <action selector="cameraTapped:" destination="BYZ-38-t0r" id="uVD-TG-0MH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraButton" destination="cCV-x3-gKQ" id="TxD-pW-ptm"/>
+                        <outlet property="mainImageView" destination="D9I-CC-fqU" id="8Aq-LE-Ict"/>
+                        <outlet property="resultText" destination="Z5z-se-zFz" id="akl-nQ-eMX"/>
+                        <outlet property="shareButton" destination="rQT-dC-LmO" id="d1b-BS-2pJ"/>
+                        <outlet property="topImageView" destination="hpf-bU-xYe" id="Qbn-AO-lgf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="869.56521739130437" y="138.61607142857142"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="h5y-Qc-y9W">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cVx-K0-MAz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Waj-JT-hyC">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="oGY-OR-0DB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QPE-8t-GFx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="72" y="139"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="hotdogBackground" width="191" height="143"/>
+    </resources>
+</document>
